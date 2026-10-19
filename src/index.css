@@ -1,0 +1,51 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ====== RANG SOZLAMALARI: asosiy rangni shu yerda almashtiring (--accent) ====== */
+:root {
+  --bg: #f0f0f7; --card: #ffffff; --text: #1e1e2a; --muted: #6b6b7b; --line: #e4e4ee;
+  --accent: #2563eb;
+}
+.dark {
+  --bg: #0e0e16; --card: #171722; --text: #f1f1f7; --muted: #9a9ab0; --line: #2a2a3a;
+  --accent: #60a5fa;
+}
+@theme inline {
+  --color-bg: var(--bg); --color-card: var(--card); --color-ink: var(--text);
+  --color-muted: var(--muted); --color-line: var(--line); --color-accent: var(--accent);
+}
+
+html { scroll-behavior: smooth; }
+body { background: var(--bg); font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+
+/* Skroll bilan paydo bo'lish */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s ease, transform .7s ease; }
+.reveal.show { opacity: 1; transform: none; }
+
+/* Skill barlar to'lishi */
+.bar { width: 0; transition: width 1.3s cubic-bezier(.2,.8,.2,1) .3s; }
+.reveal.show .bar { width: var(--w); }
+
+/* Sahifa yuklanganda kirish animatsiyalari */
+@keyframes in-left { from { opacity: 0; transform: translateX(-40px); } to { opacity: 1; transform: none; } }
+@keyframes in-right { from { opacity: 0; transform: translateX(40px); } to { opacity: 1; transform: none; } }
+@keyframes in-up { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+.in-left { animation: in-left .8s ease both; }
+.in-right { animation: in-right .8s ease both; }
+.in-up { animation: in-up .8s ease both; }
+
+/* Suzuvchi shakllar va yaltirovchi matn */
+@keyframes float { 0%,100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-16px) rotate(25deg); } }
+.float { animation: float 6s ease-in-out infinite; }
+@keyframes shimmer { to { background-position: 200% center; } }
+.shimmer { background-size: 200% auto; animation: shimmer 4s linear infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .reveal { opacity: 1; transform: none; }
+  .bar { width: var(--w); }
+  html { scroll-behavior: auto; }
+}
+
+.no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
